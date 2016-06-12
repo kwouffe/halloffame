@@ -1,0 +1,53 @@
+body  {
+  width: 100% auto;
+}
+
+
+
+table  {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  /*table-layout:fixed;*/
+}
+
+th {
+  height: 50px;
+  text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: #4CAF50;
+  color: white;
+}
+
+td {
+  height: 50px;
+  vertical-align: bottom;
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+td.poc{
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+td.patch_no{
+  background-color: #ffb366
+}
+
+td.patch_yes{
+  background-color: #ccffcc
+}
+
+td.published_no{
+  background-color: #ffe6e6
+}
+
+td.published_yes{
+  background-color: #e6ffe6
+}
+
+tr:hover {background-color: #65ade8}

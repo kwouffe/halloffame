@@ -1,0 +1,38 @@
+[
+    {
+        "DO": "Emilien",
+        "check_string": "--></script><script>alert('Patatas')</script>",
+        "last_test": "",
+        "reporter": "Emilien",
+        "url": "https://www.vulnerable1.top/vulnepage?%22%22--%3E%3C/script%3E%3Cscript%3Ealert%28%27Patatas%27%29%3C/script%3E",
+        "type": "XSS",
+        "scanable": "yes",
+        "patched": "no",
+        "patched_date": "",
+        "report_date": "2016-06-02",
+        "Incident": "66666",
+        "published": "no",
+        "constituent": "vulnerable1",
+        "data": "",
+        "method": "GET"
+    },
+    {
+    "DO": "Emilien",
+    "check_string": "><script>alert('HvulnerableH')</script>",
+    "last_test": "",
+    "reporter": "Tom Cruize",
+    "url": "http://crappy-website.eu/search-results",
+    "type": "XSS",
+    "scanable": "yes",
+    "patched": "no",
+    "patched_date": "",
+    "report_date": "2016-06-03",
+    "Incident": "00000",
+    "published": "no",
+    "constituent": "Crappy website",
+    "data": {
+        "keywords": "\"><script>alert('HvulnerableH')</script>"
+    },
+    "method": "POST"
+    }
+]
