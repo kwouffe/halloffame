@@ -7,7 +7,7 @@
         "url": "https://www.vulnerable1.top/vulnepage?%22%22--%3E%3C/script%3E%3Cscript%3Ealert%28%27Patatas%27%29%3C/script%3E",
         "type": "XSS",
         "scanable": "yes",
-        "patched": "no",
+        "patched": "yes",
         "patched_date": "",
         "report_date": "2016-06-02",
         "Incident": "66666",
@@ -17,22 +17,39 @@
         "method": "GET"
     },
     {
-    "DO": "Emilien",
-    "check_string": "><script>alert('HvulnerableH')</script>",
-    "last_test": "",
-    "reporter": "Tom Cruize",
-    "url": "http://crappy-website.eu/search-results",
-    "type": "XSS",
-    "scanable": "yes",
-    "patched": "no",
-    "patched_date": "",
-    "report_date": "2016-06-03",
-    "Incident": "00000",
-    "published": "no",
-    "constituent": "Crappy website",
-    "data": {
-        "keywords": "\"><script>alert('HvulnerableH')</script>"
+        "DO": "Emilien",
+        "check_string": "><script>alert('HvulnerableH')</script>",
+        "last_test": "",
+        "reporter": "Tom Cruize",
+        "url": "http://crappy-website.eu/search-results",
+        "type": "XSS",
+        "scanable": "yes",
+        "patched": "no",
+        "patched_date": "",
+        "report_date": "2016-06-03",
+        "Incident": "00000",
+        "published": "no",
+        "constituent": "Crappy website",
+        "data": {
+                  "keywords": "\"><script>alert('HvulnerableH')</script>"
+                },
+        "method": "POST"
     },
-    "method": "POST"
+    {
+        "DO": "Emilien",
+        "check_string": "--></script><script>alert('pouet')</script>",
+        "last_test": "",
+        "reporter": "Emilien",
+        "url": "https://www.vulnerable2.top/testpage?%22%22--%3E%3C/script%3E%3Cscript%3Ealert%28%27pouet%27%29%3C/script%3E",
+        "type": "XSS",
+        "scanable": "yes",
+        "patched": "no",
+        "patched_date": "",
+        "report_date": "2016-06-02",
+        "Incident": "66667",
+        "published": "yes",
+        "constituent": "vulnerable2",
+        "data": "",
+        "method": "GET"
     }
 ]
