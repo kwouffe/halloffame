@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # webserver.py - web app to display/edit halloffame.json
-# should be able to launch the vulnerability checking 
+# should be able to launch the vulnerability checking
 
 """
 Web app to display/edit the halloffame.json file
@@ -67,6 +67,7 @@ def new_vuln():
 @app.route('/create_vuln/', methods=['POST'])
 def create_vuln():
     halloffame = load_hof()
+
     # creating the new entry
     # data value is buggy for now. Should find a way to receive POST data to build a proper dictionary for data value
     new_vuln = {"DO":request.form['DO'],
@@ -77,7 +78,7 @@ def create_vuln():
         "type":request.form['vuln_type'],
         "method":request.form['method'],
         "url":request.form['url'],
-        "data":request.form['data'],
+        "data":'',
         "check_string":request.form['check_string'],
         "scanable":request.form['scanable'],
         "published":request.form['published'],
@@ -85,6 +86,12 @@ def create_vuln():
         "patched_date":"",
         "last_test":""
     }
+    post_data = request.form['post_data']
+    if post_data != '':
+        data = {}
+        for counter in range(1,int(post_data)+1):
+            data[request.form['key'+str(counter)]]=request.form['value'+str(counter)]
+        new_vuln["data"]=data
 
     #adding the entry to the list
     halloffame.append(new_vuln)

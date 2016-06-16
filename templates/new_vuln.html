@@ -3,6 +3,66 @@
 
 {% block content %}
 
+<!-- SCRIPT -->
+<script type='text/javascript'>
+function addData() {
+  // getting the number of entries so create
+  var number = document.getElementById("post_data").value;
+  number ++;
+
+  //cleaning
+  var container = document.getElementById("dynamicData");
+  while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+
+  for (counter=1;counter<number;counter++){
+    //initializing stuffs
+    var data_key = document.createElement("input");
+    var data_value = document.createElement("input");
+    var label_key = document.createElement("label");
+    var label_value = document.createElement("label");
+    var data_div = document.createElement("div");
+    var key_div = document.createElement("div");
+    var value_div = document.createElement("div");
+
+    //setting type and names
+    data_key.type = "text";
+    data_value.type = "text";
+    data_key.name = "key"+counter;
+    data_value.name = "value"+counter;
+    data_key.className = "form-control";
+    data_value.className = "form-control";
+
+    //setting the div
+    key_div.className = "col-sm-10";
+    value_div.className = "col-sm-10";
+
+    //setting the labels
+    label_key.setAttribute("for",data_key);
+    label_key.className = "control-label col-sm-2";
+    label_key.innerHTML = "Key" + counter;
+    //
+    label_value.setAttribute("for",data_value);
+    label_value.className = "control-label col-sm-2";
+    label_value.innerHTML = "Value" + counter;
+
+    //building HTML
+    container.appendChild(data_div);
+    //
+    data_div.appendChild(key_div);
+    key_div.appendChild(data_key);
+    data_div.insertBefore(label_key, key_div);
+    //
+    data_div.appendChild(value_div);
+    value_div.appendChild(data_value);
+    data_div.insertBefore(label_value, value_div);
+  }
+}
+</script>
+<!-- end SCRIPT -->
+
+
 <div class="col-md-6 col-md-offset-3">
   <h3 class="text-center text-info"> Create new vulnerability for the hall of fame </h3>
     <form method="post" action="{{ url_for('create_vuln') }}" class="form-horizontal">
@@ -59,8 +119,21 @@
       </fieldset>
       <fieldset class="form-group">
         <label for="data" class="control-label col-sm-2">data</label>
-        <div class="col-sm-10">
-          <input type="text" name="data"  class="form-control">
+        <div class="col-sm-10 text-center">
+          <div id="dynamicData">
+<!--        ##example of dynamic data##
+            <label for="myKeys[]" class="control-label col-sm-2">Key1: </label>
+            <div class="col-sm-10">
+              <input type="text" name="myKeys[]"  class="form-control">
+            </div>
+            <label for="myValues[]" class="control-label col-sm-2">Value1: </label>
+            <div class="col-sm-10">
+              <input type="text" name="myValues[]"  class="form-control">
+            </div>
+-->
+          </div>
+          <input type="text" id="post_data" name="post_data" value="" placeholder="Number of POST parameter">
+          <input type="button" class="btn btn-primary" value="Add POST data" onClick="addData();">
         </div>
       </fieldset>
       <fieldset class="form-group">
