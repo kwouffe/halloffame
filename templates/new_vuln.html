@@ -1,0 +1,99 @@
+{% extends "main.html" %}
+{% block title %}New Vulnerability{% endblock %}
+
+{% block content %}
+
+<div class="col-md-6 col-md-offset-3">
+  <h3 class="text-center text-info"> Create new vulnerability for the hall of fame </h3>
+    <form method="post" action="{{ url_for('create_vuln') }}" class="form-horizontal">
+      <fieldset class="form-group">
+        <label for="DO" class="control-label col-sm-2">Duty officer initials</label>
+        <div class="col-sm-10">
+          <input type="text" name="DO" class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="constituent" class="control-label col-sm-2">constituent</label>
+        <div class="col-sm-10">
+          <input type="text" name="constituent"  class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="reporter" class="control-label col-sm-2">reporter</label>
+        <div class="col-sm-10">
+          <input type="text" name="reporter" class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="report_date" class="control-label col-sm-2">report date</label>
+        <div class="col-sm-10">
+          <input type="text" name="report_date" class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="incident_number" class="control-label col-sm-2">incident number</label>
+        <div class="col-sm-10">
+          <input type="text" name="incident_number"  class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="vuln_type" class="control-label col-sm-2">Type</label>
+        <div class="col-sm-10">
+          <input type="text" name="vuln_type"  class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="method" class="control-label col-sm-2">method</label>
+        <div class="col-sm-10">
+          <select name="method"  class="form-control">
+            <option>GET</option>
+            <option>POST</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="url" class="control-label col-sm-2">URL</label>
+        <div class="col-sm-10">
+          <textarea rows="3" name="url"  class="form-control"></textarea>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="data" class="control-label col-sm-2">data</label>
+        <div class="col-sm-10">
+          <input type="text" name="data"  class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="check_string" class="control-label col-sm-2">String to check</label>
+        <div class="col-sm-10">
+          <input type="text" name="check_string"  class="form-control">
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="scanable" class="control-label col-sm-2">scanable</label>
+        <div class="col-sm-10">
+          <select name="scanable"  class="form-control">
+            <option>yes</option>
+            <option>no</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="published" class="control-label col-sm-2">published</label>
+        <div class="col-sm-10">
+          <select name="published"  class="form-control">
+            <option>no</option>
+            <option>yes</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+          <input type="submit"  class="btn btn-primary" value="create" name="action">
+<!--          <input type="submit"  class="btn btn-primary" value="test" name="action"> -->
+        </div>
+      </div>
+    </form>
+</div>
+
+{% endblock %}

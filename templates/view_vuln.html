@@ -1,0 +1,100 @@
+{% extends "main.html" %}
+{% block title %}View vulnerability{% endblock %}
+
+{% block content %}
+{% for hof_vuln in hof_vulns %}
+<div class="col-md-6 col-md-offset-3">
+  <h3 class="text-center text-info"> vulnerability </h3>
+    <form method="post" action="{{ url_for('update_vuln') }}" class="form-horizontal">
+      <fieldset class="form-group">
+        <label for="DO" class="control-label col-sm-2">Duty officer initials</label>
+        <div class="col-sm-10">
+          <input type="text" name="DO" class="form-control" value={{ hof_vuln.DO }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="constituent" class="control-label col-sm-2">constituent</label>
+        <div class="col-sm-10">
+          <input type="text" name="constituent"  class="form-control" value={{ hof_vuln.constituent }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="reporter" class="control-label col-sm-2">reporter</label>
+        <div class="col-sm-10">
+          <input type="text" name="reporter" class="form-control" value={{ hof_vuln.reporter }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="report_date" class="control-label col-sm-2">report date</label>
+        <div class="col-sm-10">
+          <input type="text" name="report_date" class="form-control" value={{ hof_vuln.report_date }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="incident_number" class="control-label col-sm-2">incident number</label>
+        <div class="col-sm-10">
+          <input type="text" name="incident_number"  class="form-control" value={{ hof_vuln.Incident }} readonly>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="vuln_type" class="control-label col-sm-2">Type</label>
+        <div class="col-sm-10">
+          <input type="text" name="vuln_type"  class="form-control" value={{ hof_vuln.type }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="method" class="control-label col-sm-2">method</label>
+        <div class="col-sm-10">
+          <select name="method"  class="form-control" value={{ hof_vuln.method }}>
+            <option>GET</option>
+            <option>POST</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="url" class="control-label col-sm-2">URL</label>
+        <div class="col-sm-10">
+          <textarea rows="3" name="url"  class="form-control" readonly>{{ hof_vuln.url }}</textarea>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="data" class="control-label col-sm-2">data</label>
+        <div class="col-sm-10">
+          <input type="text" name="data"  class="form-control" value={{ hof_vuln.data }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="check_string" class="control-label col-sm-2">String to check</label>
+        <div class="col-sm-10">
+          <input type="text" name="check_string"  class="form-control" value={{ hof_vuln.check_string }}>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="scanable" class="control-label col-sm-2">scanable</label>
+        <div class="col-sm-10">
+          <select name="scanable"  class="form-control" value={{ hof_vuln.scanable }}>
+            <option>yes</option>
+            <option>no</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="published" class="control-label col-sm-2">published</label>
+        <div class="col-sm-10">
+          <select name="published"  class="form-control" value={{ hof_vuln.published }}>
+            <option>no</option>
+            <option>yes</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+          <input type="submit"  class="btn btn-primary" value="update" name="action">
+<!--          <input type="submit"  class="btn btn-primary" value="test" name="action"> -->
+        </div>
+      </div>
+    </form>
+</div>
+{% endfor %}
+
+{% endblock %}

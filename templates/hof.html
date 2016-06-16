@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+{% extends "main.html" %}
 {% block title %}Hall Of Fame{% endblock %}
 
 {% block content %}
@@ -32,7 +32,8 @@
         <td>{{ hof_vuln.constituent }}</td>
         <td>{{ hof_vuln.type }}</td>
         <td style="word-wrap: break-word;word-break: break-all;">{{ hof_vuln.url }}</td>
-        <td>{{ hof_vuln.Incident }}</td>
+        <!-- <td>{{ hof_vuln.Incident }}</td> -->
+        <td><a class="text-center text-info" href={{ url_for('view_vuln',incident_number=(hof_vuln.Incident)) }}>{{ hof_vuln.Incident }}</a></td>
         <td>{{ hof_vuln.DO }}</td>
         <td>{{ hof_vuln.patched }}</td>
         <td>{{ hof_vuln.published }}</td>
