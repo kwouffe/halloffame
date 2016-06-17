@@ -115,7 +115,7 @@ def view_vuln(incident_number):
     #looking for Incident with the specified Incident Number (should be uniq in the future release)
     list_incident = []
     for i in range (len(halloffame)):
-            if int(halloffame[i]["Incident"]) == int(incident_number):
+            if halloffame[i]["Incident"] == incident_number:
                 list_incident.append(halloffame[i])
 
     #list_incident is the list of dictionnaries (based on JSON file)
