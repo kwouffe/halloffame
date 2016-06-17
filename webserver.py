@@ -138,7 +138,13 @@ def update_vuln():
             halloffame[i]["type"] = request.form['vuln_type']
             halloffame[i]["method"] = request.form['method']
             halloffame[i]["url"] = request.form['url']
-            halloffame[i]["data"] = request.form['data']
+            halloffame[i]["data"] = '' #request.form['data']
+            post_data = request.form['post_data']
+            if post_data != '':
+                data = {}
+                for counter in range(1,int(post_data)+1):
+                    data[request.form['key'+str(counter)]]=request.form['value'+str(counter)]
+                halloffame[i]["data"]=data
             halloffame[i]["check_string"] = request.form['check_string']
             halloffame[i]["scanable"] = request.form['scanable']
             halloffame[i]["published"] = request.form['published']
