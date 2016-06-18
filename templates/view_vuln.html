@@ -69,45 +69,45 @@ function addData() {
       <fieldset class="form-group">
         <label for="DO" class="control-label col-sm-2">Duty officer initials</label>
         <div class="col-sm-10">
-          <input type="text" name="DO" class="form-control" value={{ hof_vuln.DO }}>
+          <input type="text" name="DO" class="form-control" value="{{ hof_vuln.DO }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="constituent" class="control-label col-sm-2">constituent</label>
         <div class="col-sm-10">
-          <input type="text" name="constituent"  class="form-control" value={{ hof_vuln.constituent }}>
+          <input type="text" name="constituent"  class="form-control" value="{{ hof_vuln.constituent }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="reporter" class="control-label col-sm-2">reporter</label>
         <div class="col-sm-10">
-          <input type="text" name="reporter" class="form-control" value={{ hof_vuln.reporter }}>
+          <input type="text" name="reporter" class="form-control" value="{{ hof_vuln.reporter }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="report_date" class="control-label col-sm-2">report date</label>
         <div class="col-sm-10">
-          <input type="text" name="report_date" class="form-control" value={{ hof_vuln.report_date }}>
+          <input type="text" name="report_date" class="form-control" value="{{ hof_vuln.report_date }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="incident_number" class="control-label col-sm-2">incident number</label>
         <div class="col-sm-10">
-          <input type="text" name="incident_number"  class="form-control" value={{ hof_vuln.Incident }} readonly>
+          <input type="text" name="incident_number"  class="form-control" value="{{ hof_vuln.Incident }}" readonly>
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="vuln_type" class="control-label col-sm-2">Type</label>
         <div class="col-sm-10">
-          <input type="text" name="vuln_type"  class="form-control" value={{ hof_vuln.type }}>
+          <input type="text" name="vuln_type"  class="form-control" value="{{ hof_vuln.type }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="method" class="control-label col-sm-2">method</label>
         <div class="col-sm-10">
-          <select name="method"  class="form-control" value={{ hof_vuln.method }}>
-            <option>GET</option>
-            <option>POST</option>
+          <select name="method"  class="form-control" value="{{ hof_vuln.method }}">
+            <option value="GET" {% if hof_vuln.method=='GET' %} selected="selected"{% endif %}>GET</option>
+            <option value="POST" {% if hof_vuln.method=='POST' %} selected="selected"{% endif %}>POST</option>
           </select>
         </div>
       </fieldset>
@@ -129,11 +129,11 @@ function addData() {
                 {% set name_value = 'value' ~ loop.index %}
                 <label for="{{ name_key }}" class="control-label col-sm-2">Key{{ loop.index }} </label>
                 <div class="col-sm-10">
-                  <input type="text" name="{{ name_key }}"  class="form-control" value={{ key }}>
+                  <input type="text" name="{{ name_key }}"  class="form-control" value="{{ key }}">
                 </div>
                 <label for="{{ name_value }}" class="control-label col-sm-2">Value{{ loop.index }} </label>
                 <div class="col-sm-10">
-                  <input type="text" name="{{ name_value }}"  class="form-control" value={{ value }}>
+                  <input type="text" name="{{ name_value }}"  class="form-control" value="{{ value }}">
                 </div>
               {% endfor %}
             {% endif %}
@@ -146,31 +146,51 @@ function addData() {
       <fieldset class="form-group">
         <label for="check_string" class="control-label col-sm-2">String to check</label>
         <div class="col-sm-10">
-          <input type="text" name="check_string"  class="form-control" value={{ hof_vuln.check_string }}>
+          <input type="text" name="check_string"  class="form-control" value="{{ hof_vuln.check_string }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="scanable" class="control-label col-sm-2">scanable</label>
         <div class="col-sm-10">
-          <select name="scanable"  class="form-control" value={{ hof_vuln.scanable }}>
-            <option>yes</option>
-            <option>no</option>
+          <select name="scanable"  class="form-control" value="{{ hof_vuln.scanable }}">
+            <option value="yes" {% if hof_vuln.scanable=='yes' %} selected="selected"{% endif %}>yes</option>
+            <option value="no" {% if hof_vuln.scanable=='no' %} selected="selected"{% endif %}>no</option>
           </select>
         </div>
       </fieldset>
       <fieldset class="form-group">
         <label for="published" class="control-label col-sm-2">published</label>
         <div class="col-sm-10">
-          <select name="published"  class="form-control" value={{ hof_vuln.published }}>
-            <option>no</option>
-            <option>yes</option>
+          <select name="published"  class="form-control" value="{{ hof_vuln.published }}">
+            <option value="yes" {% if hof_vuln.published=='yes' %} selected="selected"{% endif %}>yes</option>
+            <option value="no" {% if hof_vuln.published=='no' %} selected="selected"{% endif %}>no</option>
           </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="last_test" class="control-label col-sm-2">Last check</label>
+        <div class="col-sm-4">
+          <input type="text" name="last_test"  class="form-control" value="{{ hof_vuln.last_test }}" readonly>
+        </div>
+        <label for="test_status" class="control-label col-sm-2">Status</label>
+        <div class="col-sm-4">
+          <input type="text" name="test_status"  class="form-control" value="{{ hof_vuln.test_status }}" readonly>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="patched" class="control-label col-sm-2">Patched</label>
+        <div class="col-sm-4">
+          <input type="text" name="patched"  class="form-control" value="{{ hof_vuln.patched }}" readonly>
+        </div>
+        <label for="patched_date" class="control-label col-sm-2">Patched Date</label>
+        <div class="col-sm-4">
+          <input type="text" name="patched"  class="form-control" value="{{ hof_vuln.patched_date }}" readonly>
         </div>
       </fieldset>
       <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
           <input type="submit"  class="btn btn-primary" value="update" name="action">
-<!--          <input type="submit"  class="btn btn-primary" value="test" name="action"> -->
+          <input type="submit"  class="btn btn-primary" value="test" name="action">
         </div>
       </div>
     </form>

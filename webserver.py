@@ -22,6 +22,7 @@ from flask import url_for
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
 from flask_nav.elements import Navbar, View
+from hofscanner import checkvuln
 
 
 ########## Navbar
@@ -126,34 +127,42 @@ def view_vuln(incident_number):
 def update_vuln():
     halloffame = load_hof()
 
-    print (request.form['reporter'])
+    if request.form['action'] == 'update':
+        for i in range (len(halloffame)):
+            ## for now url is used as a key - in the future, Incident_number should be uniq
+            if int(halloffame[i]["Incident"]) == int(request.form['incident_number']) and str(halloffame[i]["url"]) == str(request.form['url']):
+                halloffame[i]["DO"] = request.form['DO']
+                halloffame[i]["constituent"] = request.form['constituent']
+                halloffame[i]["reporter"] = request.form['reporter']
+                halloffame[i]["report_date"] = request.form['report_date']
+                halloffame[i]["type"] = request.form['vuln_type']
+                halloffame[i]["method"] = request.form['method']
+                halloffame[i]["url"] = request.form['url']
+                halloffame[i]["data"] = '' #request.form['data']
+                post_data = request.form['post_data']
+                if post_data != '':
+                    data = {}
+                    for counter in range(1,int(post_data)+1):
+                        data[request.form['key'+str(counter)]]=request.form['value'+str(counter)]
+                        halloffame[i]["data"]=data
+                halloffame[i]["check_string"] = request.form['check_string']
+                halloffame[i]["scanable"] = request.form['scanable']
+                halloffame[i]["published"] = request.form['published']
+    elif request.form['action'] == 'test':
+        print ('toto')
+        for i in range (len(halloffame)):
+            ## for now url is used as a key - in the future, Incident_number should be uniq
+            if int(halloffame[i]["Incident"]) == int(request.form['incident_number']) and str(halloffame[i]["url"]) == str(request.form['url']):
+                halloffame[i] = checkvuln(halloffame[i])
 
-    for i in range (len(halloffame)):
-        ## for now url is used as a key - in the future, Incident_number should be uniq
-        if int(halloffame[i]["Incident"]) == int(request.form['incident_number']) and str(halloffame[i]["url"]) == str(request.form['url']):
-            halloffame[i]["DO"] = request.form['DO']
-            halloffame[i]["constituent"] = request.form['constituent']
-            halloffame[i]["reporter"] = request.form['reporter']
-            halloffame[i]["report_date"] = request.form['report_date']
-            halloffame[i]["type"] = request.form['vuln_type']
-            halloffame[i]["method"] = request.form['method']
-            halloffame[i]["url"] = request.form['url']
-            halloffame[i]["data"] = '' #request.form['data']
-            post_data = request.form['post_data']
-            if post_data != '':
-                data = {}
-                for counter in range(1,int(post_data)+1):
-                    data[request.form['key'+str(counter)]]=request.form['value'+str(counter)]
-                halloffame[i]["data"]=data
-            halloffame[i]["check_string"] = request.form['check_string']
-            halloffame[i]["scanable"] = request.form['scanable']
-            halloffame[i]["published"] = request.form['published']
 
     # writing the JSON file
     with open('halloffame.json', 'w') as data:
         data.write(json.dumps(halloffame, indent=4))
 
-    return render_template('done.html')
+    #return render_template('done.html')
+    return view_vuln(request.form['incident_number'])
+
 
 
 #### Start vulnerability test ####
