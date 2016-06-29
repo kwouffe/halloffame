@@ -35,7 +35,7 @@
         <td>{{ hof_vuln.type }}</td>
         <td style="word-wrap: break-word;word-break: break-all;">{{ hof_vuln.url }}</td>
         <!-- <td>{{ hof_vuln.Incident }}</td> -->
-        <td><a class="text-center text-info" href="http://rtir.cert.europa.eu/RTIR/Display.html?id={{ hof_vuln.Incident }}">{{ hof_vuln.Incident }}</a></td>
+        <td><a class="text-center text-info" href={{ url_for('view_vuln',vuln_id=(hof_vuln.id)) }}>{{ hof_vuln.Incident }}</a></td>
         <td><a class="text-center text-info" href={{ url_for('display_dutyoff',dutyoff=(hof_vuln.DO)) }}>{{ hof_vuln.DO }}</a></td>
         <td>{{ hof_vuln.patched }}</td>
         <td>{{ hof_vuln.published }}</td>
