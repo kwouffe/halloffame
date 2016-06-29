@@ -31,18 +31,19 @@ def checkvuln (vulnerability):
     if  check_result[0] == 'YES, it is patched, hell yeah':
         print ('patched' + str(check_result[1]))
         vulnerability["patched"] = 'yes'
-        vulnerability["test_status"] = 'OK, code:' + str(check_result[1])
+        vulnerability["test_status"] = str(check_result[1])
         if vulnerability["patched_date"] == '':
             vulnerability["patched_date"] = str(now)
     elif check_result[0] == 'NO ... still vulnerable':
         print ('not patched' + str(check_result[1]))
         vulnerability["patched"] = 'no'
-        vulnerability["test_status"] = 'OK, code:' + str(check_result[1])
+        vulnerability["test_status"] = str(check_result[1])
+        vulnerability["patched_date"] = ''
     elif check_result[0] == 'fuck it did not worked':
-        vulnerability["test_status"] = 'KO, code:' + str(check_result[1])
+        vulnerability["test_status"] = str(check_result[1])
     elif check_result == 'not scanable':
         print ('No automated scan available')
-        vulnerability["test_status"] = 'KO, not scanable'
+        vulnerability["test_status"] = '000'
     print (vulnerability["patched"])
     return vulnerability
 
@@ -52,7 +53,7 @@ def checkvuln (vulnerability):
 ## called by checkmybooty() function
 ## return a list (result,HTTP return code)
 def check_patched(method,url,data,check_string):
-    page = requests.request(method, url, data=data)
+    page = requests.request(method, url, data=data, stream=False)
     #print page.text
     if page.status_code != 403:
         if check_string in page.text:

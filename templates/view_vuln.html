@@ -67,6 +67,12 @@ function addData() {
   <h3 class="text-center text-info"> vulnerability </h3>
     <form method="post" action="{{ url_for('update_vuln') }}" class="form-horizontal">
       <fieldset class="form-group">
+        <label for="id" class="control-label col-sm-2">Vulnerability ID</label>
+        <div class="col-sm-10">
+          <input type="text" name="id" class="form-control" value="{{ hof_vuln.id }}" readonly>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
         <label for="DO" class="control-label col-sm-2">Duty officer initials</label>
         <div class="col-sm-10">
           <input type="text" name="DO" class="form-control" value="{{ hof_vuln.DO }}">
@@ -93,7 +99,7 @@ function addData() {
       <fieldset class="form-group">
         <label for="incident_number" class="control-label col-sm-2">incident number</label>
         <div class="col-sm-10">
-          <input type="text" name="incident_number"  class="form-control" value="{{ hof_vuln.Incident }}" readonly>
+          <input type="text" name="incident_number"  class="form-control" value="{{ hof_vuln.Incident }}">
         </div>
       </fieldset>
       <fieldset class="form-group">
@@ -114,7 +120,7 @@ function addData() {
       <fieldset class="form-group">
         <label for="url" class="control-label col-sm-2">URL</label>
         <div class="col-sm-10">
-          <textarea rows="3" name="url"  class="form-control" readonly>{{ hof_vuln.url }}</textarea>
+          <textarea rows="3" name="url"  class="form-control">{{ hof_vuln.url }}</textarea>
         </div>
       </fieldset>
       <fieldset class="form-group">
@@ -191,6 +197,12 @@ function addData() {
         <div class="col-sm-10 col-sm-offset-2">
           <input type="submit"  class="btn btn-primary" value="update" name="action">
           <input type="submit"  class="btn btn-primary" value="test" name="action">
+          {% if hof_vuln.patched=='no' %}
+            <input type="submit"  class="btn btn-primary" value="mark as patched" name="action">
+          {% endif %}
+          {% if hof_vuln.patched=='yes' %}
+            <input type="submit"  class="btn btn-primary" value="mark as unpatched" name="action">
+          {% endif %}
         </div>
       </div>
     </form>

@@ -33,6 +33,7 @@ def mynavbar():
     return Navbar(
         'Hall of Fame',
         View('All vulnerabilities', 'index'),
+        View('Not scanned vulnerabilities', 'display_notscan'),
         View('New vulnerability', 'new_vuln'),
     )
 ######### End Navbar
@@ -60,6 +61,63 @@ def display_hof():
     sorted_halloffame = load_sorted_hof()
     return render_template('hof.html', hof_vulns=sorted_halloffame)
 
+##### Vulnerabilities per constituent/reporter/DO ######
+
+@app.route('/constituent/<constituent>')
+def display_constituent(constituent):
+    sorted_halloffame = load_sorted_hof()
+    constituent_halloffame = []
+
+    for i in range (len(sorted_halloffame)):
+            if sorted_halloffame[i]["constituent"] == constituent:
+                constituent_halloffame.append(sorted_halloffame[i])
+
+    return render_template('hof.html', hof_vulns=constituent_halloffame)
+
+@app.route('/reporter/<reporter>')
+def display_reporter(reporter):
+    sorted_halloffame = load_sorted_hof()
+    reporter_halloffame = []
+
+    for i in range (len(sorted_halloffame)):
+            if sorted_halloffame[i]["reporter"] == reporter:
+                reporter_halloffame.append(sorted_halloffame[i])
+
+    return render_template('hof.html', hof_vulns=reporter_halloffame)
+
+@app.route('/DO/<dutyoff>')
+def display_dutyoff(dutyoff):
+    sorted_halloffame = load_sorted_hof()
+    dutyoff_halloffame = []
+
+    for i in range (len(sorted_halloffame)):
+            if sorted_halloffame[i]["DO"] == dutyoff:
+                dutyoff_halloffame.append(sorted_halloffame[i])
+
+    return render_template('hof.html', hof_vulns=dutyoff_halloffame)
+
+@app.route('/notscan/')
+def display_notscan():
+    sorted_halloffame = load_sorted_hof()
+    notscan_halloffame = []
+
+    for i in range (len(sorted_halloffame)):
+            if sorted_halloffame[i]["scanable"] == 'no':
+                notscan_halloffame.append(sorted_halloffame[i])
+
+    return render_template('hof.html', hof_vulns=notscan_halloffame)
+
+@app.route('/constituent_cleaned/<constituent>')
+def display_constituent_cleaned(constituent):
+    sorted_halloffame = load_sorted_hof()
+    constituent_cleaned_halloffame = []
+
+    for i in range (len(sorted_halloffame)):
+            if sorted_halloffame[i]["constituent"] == constituent:
+                constituent_cleaned_halloffame.append(sorted_halloffame[i])
+
+    return render_template('hof-clean.html', hof_vulns=constituent_cleaned_halloffame)
+
 #### Modifying JSON file (add) ######
 @app.route('/new_vuln/')
 def new_vuln():
@@ -68,6 +126,9 @@ def new_vuln():
 @app.route('/create_vuln/', methods=['POST'])
 def create_vuln():
     halloffame = load_hof()
+
+    last_id = get_last_id()
+    new_id = last_id+1
 
     # creating the new entry
     # data value is buggy for now. Should find a way to receive POST data to build a proper dictionary for data value
@@ -85,7 +146,8 @@ def create_vuln():
         "published":request.form['published'],
         "patched":"no",
         "patched_date":"",
-        "last_test":""
+        "last_test":"",
+        "id":new_id
     }
     post_data = request.form['post_data']
     if post_data != '':
@@ -102,21 +164,36 @@ def create_vuln():
         data.write(json.dumps(halloffame, indent=4))
 
     ### if ok, displaying success page
-    return render_template('done.html')
+    return view_vuln(request.form['id'])
+#    return render_template('done.html')
 
 ## function to display/edit all values from a hof entry
 #    ## incident_halloffame should be a list a dictionnaries, each dict being a vuln, all will have common incident number
 #    return render_template('view_vuln.html', hof_vulns=incident_halloffame)
 
 
-@app.route('/view_vuln/<incident_number>')
-def view_vuln(incident_number):
+#@app.route('/view_incident/<incident_number>')
+#def view_incident(incident_number):
+#    halloffame = load_hof()
+#
+#    #looking for Incident with the specified Incident Number (should be uniq in the future release)
+#    list_incident = []
+#    for i in range (len(halloffame)):
+#            if halloffame[i]["Incident"] == incident_number:
+#                list_incident.append(halloffame[i])
+#
+#    #list_incident is the list of dictionnaries (based on JSON file)
+#    return render_template('view_vuln.html', hof_vulns=list_incident)
+
+
+@app.route('/view_vuln/<vuln_id>')
+def view_vuln(vuln_id):
     halloffame = load_hof()
 
     #looking for Incident with the specified Incident Number (should be uniq in the future release)
     list_incident = []
     for i in range (len(halloffame)):
-            if halloffame[i]["Incident"] == incident_number:
+            if halloffame[i]["id"] == int(vuln_id):
                 list_incident.append(halloffame[i])
 
     #list_incident is the list of dictionnaries (based on JSON file)
@@ -130,7 +207,8 @@ def update_vuln():
     if request.form['action'] == 'update':
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
-            if int(halloffame[i]["Incident"]) == int(request.form['incident_number']) and str(halloffame[i]["url"]) == str(request.form['url']):
+            if int(halloffame[i]["id"]) == int(request.form['id']):
+                halloffame[i]["Incident"] = request.form['incident_number']
                 halloffame[i]["DO"] = request.form['DO']
                 halloffame[i]["constituent"] = request.form['constituent']
                 halloffame[i]["reporter"] = request.form['reporter']
@@ -152,16 +230,29 @@ def update_vuln():
         print ('toto')
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
-            if int(halloffame[i]["Incident"]) == int(request.form['incident_number']) and str(halloffame[i]["url"]) == str(request.form['url']):
+            if int(halloffame[i]["id"]) == int(request.form['id']):
                 halloffame[i] = checkvuln(halloffame[i])
-
+    elif request.form['action'] == 'mark as patched':
+        print ('patchouli')
+        for i in range (len(halloffame)):
+            ## for now url is used as a key - in the future, Incident_number should be uniq
+            if int(halloffame[i]["id"]) == int(request.form['id']):
+                halloffame[i]["patched"] = 'yes'
+                halloffame[i]["patched_date"] = str(datetime.datetime.now())
+    elif request.form['action'] == 'mark as unpatched':
+        print ('patchouliii')
+        for i in range (len(halloffame)):
+            ## for now url is used as a key - in the future, Incident_number should be uniq
+            if int(halloffame[i]["id"]) == int(request.form['id']):
+                halloffame[i]["patched"] = 'no'
+                halloffame[i]["patched_date"] = ''
 
     # writing the JSON file
     with open('halloffame.json', 'w') as data:
         data.write(json.dumps(halloffame, indent=4))
 
     #return render_template('done.html')
-    return view_vuln(request.form['incident_number'])
+    return view_vuln(request.form['id'])
 
 
 
@@ -191,6 +282,14 @@ def key_is_date (dict):
 ############# halloffame : loaded json file
 ############# sorted_halloffame : loaded json file ordered by report_date
 
+######################## get the bigget id from the json file ###########
+def get_last_id():
+    halloffame = load_hof()
+    seq = [x['id'] for x in halloffame]
+    return max(seq)
+
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0') #for listening to all interfaces
+    #app.run() #for localhost only
