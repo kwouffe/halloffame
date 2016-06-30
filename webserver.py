@@ -164,7 +164,7 @@ def create_vuln():
         data.write(json.dumps(halloffame, indent=4))
 
     ### if ok, displaying success page
-    return view_vuln(request.form['id'])
+    return view_vuln(new_id)
 #    return render_template('done.html')
 
 ## function to display/edit all values from a hof entry
@@ -246,6 +246,14 @@ def update_vuln():
             if int(halloffame[i]["id"]) == int(request.form['id']):
                 halloffame[i]["patched"] = 'no'
                 halloffame[i]["patched_date"] = ''
+    elif request.form['action'] == 'delete':
+        print ('deletion')
+        for i in range (len(halloffame)):
+            ## for now url is used as a key - in the future, Incident_number should be uniq
+            if int(halloffame[i]["id"]) == int(request.form['id']):
+                halloffame.pop(i)
+                break
+
 
     # writing the JSON file
     with open('halloffame.json', 'w') as data:
@@ -291,5 +299,5 @@ def get_last_id():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0') #for listening to all interfaces
+    app.run(host='0.0.0.0', threaded=True) #for listening to all interfaces
     #app.run() #for localhost only
