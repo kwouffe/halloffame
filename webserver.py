@@ -10,8 +10,8 @@ CERT-EU - version 1.0
 """
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 import json
 import cgi
 import datetime
@@ -144,6 +144,7 @@ def create_vuln():
         "check_string":request.form['check_string'],
         "scanable":request.form['scanable'],
         "published":request.form['published'],
+        "test_type":request.form['test_type'],
         "patched":"no",
         "patched_date":"",
         "last_test":"",
@@ -225,29 +226,30 @@ def update_vuln():
                         halloffame[i]["data"]=data
                 halloffame[i]["check_string"] = request.form['check_string']
                 halloffame[i]["scanable"] = request.form['scanable']
+                halloffame[i]["test_type"] = request.form['test_type']
                 halloffame[i]["published"] = request.form['published']
     elif request.form['action'] == 'test':
-        print ('toto')
+        #print ('toto')
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
             if int(halloffame[i]["id"]) == int(request.form['id']):
                 halloffame[i] = checkvuln(halloffame[i])
     elif request.form['action'] == 'mark as patched':
-        print ('patchouli')
+        #print ('patchouli')
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
             if int(halloffame[i]["id"]) == int(request.form['id']):
                 halloffame[i]["patched"] = 'yes'
                 halloffame[i]["patched_date"] = str(datetime.datetime.now())
     elif request.form['action'] == 'mark as unpatched':
-        print ('patchouliii')
+        #print ('patchouliii')
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
             if int(halloffame[i]["id"]) == int(request.form['id']):
                 halloffame[i]["patched"] = 'no'
                 halloffame[i]["patched_date"] = ''
     elif request.form['action'] == 'delete':
-        print ('deletion')
+        #print ('deletion')
         for i in range (len(halloffame)):
             ## for now url is used as a key - in the future, Incident_number should be uniq
             if int(halloffame[i]["id"]) == int(request.form['id']):

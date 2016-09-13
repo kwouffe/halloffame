@@ -118,6 +118,15 @@ function addData() {
         </div>
       </fieldset>
       <fieldset class="form-group">
+        <label for="test_type" class="control-label col-sm-2">Testing Technique</label>
+        <div class="col-sm-10">
+          <select name="test_type"  class="form-control" value="{{ hof_vuln.test_type }}">
+            <option value="request" {% if hof_vuln.test_type=='request' %} selected="selected"{% endif %}>request</option>
+            <option value="dryscrape" {% if hof_vuln.test_type=='dryscrape' %} selected="selected"{% endif %}>dryscrape</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
         <label for="url" class="control-label col-sm-2">URL</label>
         <div class="col-sm-10">
           <textarea rows="3" name="url"  class="form-control">{{ hof_vuln.url }}</textarea>
@@ -130,7 +139,7 @@ function addData() {
             {% set counter = '' %}
             {% if hof_vuln.data %}
               {% set counter = hof_vuln.data|length %}
-              {% for key, value in hof_vuln.data.iteritems() %}
+              {% for key, value in hof_vuln.data.items() %}
                 {% set name_key = 'key' ~ loop.index %}
                 {% set name_value = 'value' ~ loop.index %}
                 <label for="{{ name_key }}" class="control-label col-sm-2">Key{{ loop.index }} </label>

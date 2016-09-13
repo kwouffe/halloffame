@@ -26,3 +26,6 @@ HTML templates for webserver.py
 - Flask
 - flask_bootstrap
 - flask_nav
+- dryscrape
+
+see http://dryscrape.readthedocs.io/en/latest/index.html for Dryscrape installation
