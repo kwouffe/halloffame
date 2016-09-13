@@ -5,18 +5,19 @@
         "last_test": "2016-06-18 02:53:59.891201", 
         "reporter": "Zorro", 
         "url": "http://weak/search/?_keyword=foo@foo.com%22%3E%3Cscript%3Ealert%289991%29%3C%2fscript%3E", 
-        "type": "XSS", 
+        "data": "", 
+        "test_type": "request", 
         "scanable": "yes", 
-        "patched": "no", 
-        "id": 0, 
-        "patched_date": "", 
         "report_date": "2016-05-26", 
+        "method": "GET", 
+        "patched_date": "", 
+        "patched": "no", 
         "Incident": "24224", 
         "published": "yes", 
         "constituent": "Weeeeak", 
         "test_status": "OK, code:200", 
-        "data": "", 
-        "method": "GET"
+        "type": "XSS", 
+        "id": 0
     }, 
     {
         "DO": "Tutu", 
@@ -24,19 +25,20 @@
         "last_test": "2016-06-18 02:56:56.989831", 
         "reporter": "Donald Trump", 
         "url": "http://vulnerable/search", 
-        "type": "XSS", 
+        "data": {
+            "keywords": "\"><script>alert('Pouet')</script>"
+        }, 
+        "test_type": "request", 
         "scanable": "yes", 
-        "patched": "no", 
-        "id": 1, 
-        "patched_date": "", 
         "report_date": "2016-05-25", 
+        "method": "POST", 
+        "patched_date": "", 
+        "patched": "no", 
         "Incident": "66666", 
         "published": "no", 
         "constituent": "vulnerable", 
         "test_status": "OK, code:200", 
-        "data": {
-            "keywords": "\"><script>alert('Pouet')</script>"
-        }, 
-        "method": "POST"
+        "type": "XSS", 
+        "id": 1
     }
 ]
